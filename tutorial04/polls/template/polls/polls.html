@@ -1,0 +1,32 @@
+{% load static %}
+<!--<!DOCTYPE html>-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of all polls</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+Bitches.
+<br>
+Number of visits: {{num_visits}} visit{{num_visits|pluralize}}
+<h1>List of all categories to vote on:</h1>
+
+{% for category in categories %}
+
+<ul>
+    <li><a href="{% url 'choices' category.id %}"> {{category.name}} </a></li>
+</ul>
+
+{% empty %}
+<p>No entries.</p>
+{% endfor %}
+
+<br>
+<br>
+
+<p>These polls are important because {% lorem 36 w random %} </p>
+
+
+</body>
+</html>

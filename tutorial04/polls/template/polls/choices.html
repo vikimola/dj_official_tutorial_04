@@ -1,0 +1,59 @@
+{% load static %}
+<!--<!DOCTYPE html>-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All choices of a category</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<!--{% comment %}-->
+<!--Category: {{choiceses.category_set.all}}-->
+<!--{% for choice in choiceses %}-->
+<!--<ul>-->
+<!--    <li>{{choice.choice_text}}</li>-->
+<!--</ul>-->
+<!--{% empty %}-->
+<!--<p>No entries.</p>-->
+<!--{% endfor %}-->
+<!--action="{{category.id}}/vote"-->
+<!--{% endcomment %}-->
+
+
+<form action="{% url 'vote' category.id %}" method="POST">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>Category: {{category.name}}</h1></legend>
+        {% if message %} <p>{{message}}</p> {% endif %}
+        {% for choice in category.choice_set.all %}
+        <input type="radio" name="choice" value="{{choice.id}}" id="choice{{forloop.counter}}">
+        <label for="choice{{forloop.counter}}">{{choice.choice_text}}</label>
+        <br>
+        <br>
+
+        {% empty %}
+
+        No entries.
+
+        {% endfor %}
+
+    </fieldset>
+    <br>
+    <input type="submit" value="Vote" style="color:#880E4F">
+</form>
+
+<nav>
+    <br>
+    <p>Go back to polls list: </p>
+    <button type="button"><a href="{% url 'polls' %}" style="color:#880E4F">Home</a></button>
+
+    <br>
+    <br>
+
+    <p>View results:</p>
+    <button type="button"><a href="{% url 'results' category.id %}" style="color:#880E4F">View results</a></button>
+</nav>
+
+
+</body>
+</html>

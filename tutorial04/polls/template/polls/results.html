@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <meta charset="UTF-8">
+    <title>Poll Results</title>
+</head>
+<body>
+<h1>Results</h1>
+
+<h3>Category: {{category}} </h3>
+{% for choice in category.choice_set.all %}
+<ul>
+    <li>{{choice.choice_text}}: {{choice.vote_num}} vote{{ choice.vote_num|pluralize }}</li>
+</ul>
+{% empty %}
+No entries.
+{% endfor %}
+
+
+<nav>
+    <br>
+    <p>Go back to polls list: </p>
+    <button type="button"><a href="{% url 'polls' %}" style="color:#880E4F">Home</a></button>
+
+    <br>
+    <br>
+
+    <p>Vote in this category again:</p>
+    <button type="button"><a href="{% url 'choices' category.id %}" style="color:#880E4F">Vote</a></button>
+</nav>
+
+</body>
+</html>
